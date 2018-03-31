@@ -45,12 +45,12 @@ int main(){
 
     int n; cin >> n;
 
-    fak[0] = ifak[0] = 1;
-
-    for (int i = 1; i < maxn; ++i){
+    fak[0] = 1;
+    for (int i = 1; i < maxn; ++i)
         fak[i] = 1LL * fak[i-1] * i % mod;
-        ifak[i] = modpow(fak[i], mod - 2);
-    }
+    ifak[maxn-1] = modpow(fak[maxn-1], mod-2);
+    for (int i = maxn-2; ~i; --i)
+        ifak[i] = 1LL * ifak[i + 1] * (i+1) % mod;
 
     vector<int> value(n);
 
@@ -69,6 +69,7 @@ int main(){
         int k = i;
 
         int x = 1LL * fak[k] * fak[n-k-1] % mod * comb(n, k) % mod;
+
         x = 1LL * value[i] * x % mod * (j - i) % mod;
 
         add(answer, x);
